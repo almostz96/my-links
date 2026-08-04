@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ลิงก์ของฉัน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@500;600;700&family=Noto+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #10231F;
+    --bg-soft: #16302A;
+    --card: #1B3B33;
+    --card-hover: #204540;
+    --cream: #F3EEDF;
+    --cream-dim: #C9C2AC;
+    --brass: #C9A15A;
+    --brass-dim: #8E7644;
+    --sage: #6B8F82;
+    --line: rgba(243,238,223,0.14);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: radial-gradient(ellipse at top, var(--bg-soft) 0%, var(--bg) 55%);
+    color: var(--cream);
+    font-family:'Noto Sans Thai','Noto Sans', sans-serif;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding: 56px 20px 80px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+  .page{ width:100%; max-width:480px; }
+
+  /* ---- Header ---- */
+  .header{ text-align:center; margin-bottom:34px; }
+  .avatar{
+    width:88px; height:88px; border-radius:50%;
+    margin:0 auto 18px;
+    background: conic-gradient(from 200deg, var(--brass), var(--sage), var(--brass));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--line);
+  }
+  .avatar span{
+    width:78px; height:78px; border-radius:50%;
+    background:var(--card);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Noto Serif Thai'; font-size:28px; font-weight:700; color:var(--brass);
+  }
+  .name{
+    font-family:'Noto Serif Thai'; font-weight:700; font-size:26px;
+    letter-spacing:0.3px; margin:0 0 6px;
+  }
+  .tagline{
+    font-size:14.5px; color:var(--cream-dim); margin:0;
+    font-weight:400; line-height:1.6;
+  }
+
+  /* ---- Filter tabs: "กดตามความสนใจ" ---- */
+  .filters{
+    display:flex; gap:8px; flex-wrap:wrap; justify-content:center;
+    margin: 26px 0 30px;
+  }
+  .filter-btn{
+    font-family:'IBM Plex Mono'; font-size:12.5px; letter-spacing:0.3px;
+    padding:8px 16px; border-radius:999px;
+    border:1px solid var(--line); background:transparent; color:var(--cream-dim);
+    cursor:pointer; transition:all .2s ease;
+  }
+  .filter-btn:hover{ border-color:var(--brass-dim); color:var(--cream); }
+  .filter-btn.active{
+    background:var(--brass); border-color:var(--brass); color:#1B3B33; font-weight:500;
+  }
+  .filter-btn:focus-visible{ outline:2px solid var(--brass); outline-offset:2px; }
+
+  /* ---- Link groups ---- */
+  .group{ margin-bottom:28px; }
+  .group-label{
+    font-family:'IBM Plex Mono'; font-size:11px; letter-spacing:1.5px;
+    text-transform:uppercase; color:var(--sage);
+    margin:0 0 10px 4px;
+  }
+  .links{ display:flex; flex-direction:column; gap:10px; }
+
+  .link-card{
+    display:flex; align-items:center; gap:14px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:15px 18px;
+    text-decoration:none;
+    color:var(--cream);
+    transition: transform .16s ease, background .16s ease, border-color .16s ease;
+  }
+  .link-card:hover{
+    background:var(--card-hover);
+    border-color:var(--brass-dim);
+    transform: translateY(-2px);
+  }
+  .link-card:focus-visible{ outline:2px solid var(--brass); outline-offset:2px; }
+  .link-icon{
+    width:38px; height:38px; border-radius:10px;
+    background:rgba(201,161,90,0.12);
+    display:flex; align-items:center; justify-content:center;
+    font-size:18px; flex-shrink:0;
+  }
+  .link-text{ flex:1; min-width:0; }
+  .link-title{ font-size:15px; font-weight:500; margin:0 0 2px; }
+  .link-desc{ font-size:12.5px; color:var(--cream-dim); margin:0; }
+  .link-arrow{ color:var(--brass-dim); font-size:16px; flex-shrink:0; }
+
+  .link-card[hidden]{ display:none; }
+
+  .footer{
+    text-align:center; margin-top:36px;
+    font-family:'IBM Plex Mono'; font-size:11px; color:var(--cream-dim);
+    opacity:0.6;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="avatar"><span>ฉ</span></div>
+    <h1 class="name">ชื่อของคุณ</h1>
+    <p class="tagline">คำอธิบายสั้น ๆ เกี่ยวกับตัวคุณ<br>หรือสิ่งที่คุณทำ</p>
+  </div>
+
+  <div class="filters" role="tablist" aria-label="กรองลิงก์ตามความสนใจ">
+    <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
+    <button class="filter-btn" data-filter="work">ผลงาน</button>
+    <button class="filter-btn" data-filter="social">โซเชียล</button>
+    <button class="filter-btn" data-filter="contact">ติดต่อ</button>
+  </div>
+
+  <div class="group" data-group="work">
+    <p class="group-label">ผลงาน</p>
+    <div class="links">
+      <a class="link-card" data-cat="work" href="#" target="_blank" rel="noopener">
+        <div class="link-icon">🌐</div>
+        <div class="link-text">
+          <p class="link-title">เว็บไซต์พอร์ตโฟลิโอ</p>
+          <p class="link-desc">ดูผลงานทั้งหมดของฉัน</p>
+        </div>
+        <div class="link-arrow">→</div>
+      </a>
+      <a class="link-card" data-cat="work" href="#" target="_blank" rel="noopener">
+        <div class="link-icon">📁</div>
+        <div class="link-text">
+          <p class="link-title">โปรเจกต์ล่าสุด</p>
+          <p class="link-desc">งานที่กำลังทำอยู่ตอนนี้</p>
+        </div>
+        <div class="link-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="group" data-group="social">
+    <p class="group-label">โซเชียล</p>
+    <div class="links">
+      <a class="link-card" data-cat="social" href="#" target="_blank" rel="noopener">
+        <div class="link-icon">📸</div>
+        <div class="link-text">
+          <p class="link-title">Instagram</p>
+          <p class="link-desc">@yourhandle</p>
+        </div>
+        <div class="link-arrow">→</div>
+      </a>
+      <a class="link-card" data-cat="social" href="#" target="_blank" rel="noopener">
+        <div class="link-icon">🎵</div>
+        <div class="link-text">
+          <p class="link-title">TikTok</p>
+          <p class="link-desc">@yourhandle</p>
+        </div>
+        <div class="link-arrow">→</div>
+      </a>
+      <a class="link-card" data-cat="social" href="#" target="_blank" rel="noopener">
+        <div class="link-icon">🐦</div>
+        <div class="link-text">
+          <p class="link-title">X (Twitter)</p>
+          <p class="link-desc">@yourhandle</p>
+        </div>
+        <div class="link-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="group" data-group="contact">
+    <p class="group-label">ติดต่อ</p>
+    <div class="links">
+      <a class="link-card" data-cat="contact" href="mailto:you@email.com">
+        <div class="link-icon">✉️</div>
+        <div class="link-text">
+          <p class="link-title">อีเมล</p>
+          <p class="link-desc">you@email.com</p>
+        </div>
+        <div class="link-arrow">→</div>
+      </a>
+      <a class="link-card" data-cat="contact" href="#" target="_blank" rel="noopener">
+        <div class="link-icon">💬</div>
+        <div class="link-text">
+          <p class="link-title">Line</p>
+          <p class="link-desc">แชทคุยกับฉันได้เลย</p>
+        </div>
+        <div class="link-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <p class="footer">อัปเดตล่าสุด · แก้ไขลิงก์ได้ในไฟล์ HTML</p>
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('.filter-btn');
+  const groups = document.querySelectorAll('.group');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+
+      groups.forEach(group => {
+        if (filter === 'all' || group.dataset.group === filter) {
+          group.style.display = '';
+        } else {
+          group.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
